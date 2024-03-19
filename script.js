@@ -1,24 +1,25 @@
 function add(num1,num2){
     return num1+num2;
 };
-
-function substract(num1,num2){
+function subtract(num1,num2){
     return num1-num2;
 };
-
 function multiply(num1,num2){
     return num1*num2;
 };
-
 function divide(num1,num2){
+  if (num2===0){
+      return 'never try';
+  }
+  else{
     return num1/num2;
-};
+}};
 
     function calculate(num1,operator,num2){
         if (operator==='add'){
         return add(parseFloat(num1),parseFloat(num2));
         } else if (operator==='subtract'){
-            return substract(parseFloat(num1),parseFloat(num2));
+            return subtract(parseFloat(num1),parseFloat(num2));
         } else if (operator==='multiply'){
             return multiply(parseFloat(num1),parseFloat(num2));
         } else if (operator==='divide'){
@@ -37,6 +38,8 @@ function divide(num1,num2){
             const keyContent = key.textContent;
             const displayedNum = display.textContent;
             const previousKeyType = calculator.dataset.previousKeyType;
+            Array.from(key.parentNode.children).forEach(k => k.classList.remove('is-depressed'));
+
 
             if (!action) {
                 if (displayedNum === '0'|| previousKeyType === 'operator'||previousKeyType === 'calculate') {
@@ -62,11 +65,11 @@ function divide(num1,num2){
                   const calcValue = calculate(firstValue, operator, secondValue)
                   display.textContent = calcValue;
                   calculator.dataset.firstValue = calcValue;
+                  Array.from(key.parentNode.children).forEach(k => k.classList.remove('is-depressed'));
+
                 }else{ 
                   calculator.dataset.firstValue = displayedNum;
                 }
-                
-
                 key.classList.add('is-depressed');
                 calculator.dataset.previousKeyType = 'operator';
                 calculator.dataset.operator = action;
@@ -95,13 +98,7 @@ function divide(num1,num2){
                 }
                 display.textContent=0;
                 calculator.dataset.previousKeyType='clear';
-
-                // clearButton.addEventListener('click',()=>{
-
-    
-
                 console.log('clear key!');
-                calculator.dataset.previousKeyType = 'clear';
               }
               
               else if (action === 'calculate') {
@@ -121,16 +118,13 @@ function divide(num1,num2){
               calculator.dataset.previousKeyType = 'calculate';
               console.log('equal key!');
             }
-
-              Array.from(key.parentNode.children).forEach(k => k.classList.remove('is-depressed'));
-
               if (action !== 'clear') {
                 const clearButton = calculator.querySelector('[data-action=clear]')
                 clearButton.textContent = 'CE'
               }
-         }} 
-        
-        );
+            
+         }
+        });
 
 
         
